@@ -1,0 +1,9 @@
+<!-- actually HTML, but not a complete document -->
+here comes the rain again
+<ul>
+    <li>breaking news</li>
+    <li>not so breaking news</li>
+    <li>broken news</li>
+    <li>old stuff</li>
+</ul>
+<img src="not-found" alt="unfindable image">
