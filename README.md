@@ -2,6 +2,7 @@
 Examples of HTML code for students 4AIN/4BIN TPSIT.
 ## Useful resources
 ### List of examples
-| example               | topic                                     |
-| --------------------- | ----------------------------------------- |
-| [site](examples/site) | esempio di sito con alcune funzioni utili |
+| example                     | topic                                     |
+| --------------------------- | ----------------------------------------- |
+| [site](examples/site)       | esempio di sito con alcune funzioni utili |
+| [account](examples/account) | esempio di uso dei cookies                |
