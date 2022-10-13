@@ -15,7 +15,9 @@ function check() {
     } else {
         if (isRegisteredUser(u) && matchesStoredPassword(u, getTextValue('password', null))) {
             setCookie('_logged', u)
-            window.location.assign(getCookieValue('_dest', '../index.html'))
+            let destination = getCookieValue('_dest', '../index.html')
+            deleteCookie('_dest')
+            window.location.assign(destination)
         } else {
             msg = 'username or password invalid'
         }

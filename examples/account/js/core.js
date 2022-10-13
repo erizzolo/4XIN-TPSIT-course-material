@@ -9,11 +9,14 @@ window.addEventListener('DOMContentLoaded', fill)
 function fill() {
     // get document location and split in pieces separated by '/'
     let s = window.location.href.split('/')
-    // last element, i.e. page name
+        // last element, i.e. page name
     let page = s[s.length - 1]
+    if (page == '') {
+        page = 'index.html'
+    }
     // get rid of '.html' at the end (all pages are .html here!)
     page = page.substring(0, page.length - '.html'.length)
-    // fill site standard element for this page
+        // fill site standard element for this page
     fillCommon(page)
 }
 
@@ -26,7 +29,7 @@ function fillCommon(page) {
     fillNavbar(page)
     fillNews(page)
     fillFooter(page)
-    // disable context menu
+        // disable context menu
     document.querySelector('body').addEventListener('contextmenu', noMenu)
 }
 
@@ -41,17 +44,17 @@ function noMenu(event) {
 function insertHeader(page) {
     // create the element
     const header = document.createElement('header')
-    // set attributes
+        // set attributes
     header.id = 'site-header'
-    // fill HTML content
+        // fill HTML content
     let parent = page == 'index' ? '' : '../'
     let h = `<img src="${parent}images/Logo_Levi-Ponti.PNG"`
     h += ` alt="Logo dell'Istituto Levi-Ponti">`
     h += '<p>Welcome to our site: enjoy!</p>'
     header.innerHTML = h
-    // get body element: the one and only body
+        // get body element: the one and only body
     const body = document.querySelector('body')
-    // append or insert at beginning
+        // append or insert at beginning
     if (body.firstChild == null) {
         body.appendChild(header)
     } else {
@@ -87,21 +90,19 @@ function addProfileSection(element, page) {
  */
 function fillNavbar(page) {
     // page name, link description, link title, page in root directory?, link classes
-    const NAVLINKS =
-        [
-            ['games.html', 'Games', 'Official games page', false, ''],
-            ['jokes.html', 'Jokes', 'Wanna have fun?', false, 'missing']
-        ]
-    const INFOLINKS =
-        [
-            ['about.html', 'About', 'Site information', false, 'info'],
-            ['credits.html', 'Credits', 'Helpful people', false, 'info']
-        ]
+    const NAVLINKS = [
+        ['games.html', 'Games', 'Official games page', false, ''],
+        ['jokes.html', 'Jokes', 'Wanna have fun?', false, 'missing']
+    ]
+    const INFOLINKS = [
+        ['about.html', 'About', 'Site information', false, 'info'],
+        ['credits.html', 'Credits', 'Helpful people', false, 'info']
+    ]
     const e = document.getElementById("site-nav")
     if (e != null) {
         // link to home page
         let h = createHTMLAnchor(['index.html', 'Home', 'The home page', true, ''], page)
-        // link to other pages
+            // link to other pages
         for (let l = 0; l < NAVLINKS.length; l++) {
             h += createHTMLAnchor(NAVLINKS[l], page)
         }
@@ -127,17 +128,17 @@ function fillNavbar(page) {
  * @param {*} fromPage the page containing the link
  */
 function createHTMLAnchor(linkInfo, fromPage) {
-    const root = fromPage == 'index' ? '' : '../'   // path to root directory
-    const subdir = fromPage == 'index' ? 'html/' : ''   // path to subdirectory
+    const root = fromPage == 'index' ? '' : '../' // path to root directory
+    const subdir = fromPage == 'index' ? 'html/' : '' // path to subdirectory
     const pathToPageDirectory = linkInfo[3] ? root : subdir // path to destination directory
     const active = (fromPage + '.html') == linkInfo[0] ? ' active' : '' // class for active link
     let h = ''
-    h += '<a'  // opening tag
-    h += ` class="${linkInfo[4]} ${active}"`    // class attribute
+    h += '<a' // opening tag
+    h += ` class="${linkInfo[4]} ${active}"` // class attribute
     h += ` href="${pathToPageDirectory + linkInfo[0]}"` // href attribute
-    h += ` title="${linkInfo[2]}"`  // title attribute
-    h += '>'    // end opening tag
-    h += `${linkInfo[1]}`   // link description
+    h += ` title="${linkInfo[2]}"` // title attribute
+    h += '>' // end opening tag
+    h += `${linkInfo[1]}` // link description
     h += '</a>' // closing tag
     return h
 }
@@ -148,8 +149,8 @@ function createHTMLAnchor(linkInfo, fromPage) {
  */
 function fillNews(page) {
     const e = document.getElementById("site-news")
-    // Doesn't work on local files (CORS must be http)
-    // fallback on using iframe
+        // Doesn't work on local files (CORS must be http)
+        // fallback on using iframe
     if (e != null) {
         let base = `${page == 'index' ? 'html/' : ''}news`
         fetch(base + '.txt')
@@ -167,20 +168,19 @@ function fillNews(page) {
  * @param  {} page the name of the page (e.g. 'index')
  */
 function fillFooter(page) {
-    const NAVLINKS =
-        [
-            ['games.html', 'Games', 'Official games page', false, ''],
-            ['jokes.html', 'Jokes', 'Wanna have fun?', false, 'missing'],
-            ['about.html', 'About', 'Site information', false, 'info'],
-            ['credits.html', 'Credits', 'Helpful people', false, 'info'],
-            ['privacy.html', 'Privacy', 'No privacy at all!!!', false, 'info']
-        ]
+    const NAVLINKS = [
+        ['games.html', 'Games', 'Official games page', false, ''],
+        ['jokes.html', 'Jokes', 'Wanna have fun?', false, 'missing'],
+        ['about.html', 'About', 'Site information', false, 'info'],
+        ['credits.html', 'Credits', 'Helpful people', false, 'info'],
+        ['privacy.html', 'Privacy', 'No privacy at all!!!', false, 'info']
+    ]
     const e = document.getElementById("site-footer")
     if (e != null) {
         let h = `Powered by 4XIN`
-        // link to home page
+            // link to home page
         h += createHTMLAnchor(['index.html', 'Home', 'The home page', true, ''], page)
-        // link to other pages
+            // link to other pages
         for (let l = 0; l < NAVLINKS.length; l++) {
             h += createHTMLAnchor(NAVLINKS[l], page)
         }
@@ -274,6 +274,7 @@ const hash = hashFunction
 function hashFunction(message) {
     return message
 }
+
 function hashReal(message) {
     let result
     digestMessage(message).then((hex) => result = hex)
@@ -281,9 +282,9 @@ function hashReal(message) {
 }
 
 async function digestMessage(message) {
-    const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
-    const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+    const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
     const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
     return hashHex;
 }
@@ -300,7 +301,7 @@ async function digestMessage(message) {
 function matchesStoredPassword(username, password) {
     const user = JSON.parse(getCookieValue(username, 'null'))
     return user != null && hash(password) == user.hash
-    // SubtleCrypto.digest
+        // SubtleCrypto.digest
 }
 
 /**
